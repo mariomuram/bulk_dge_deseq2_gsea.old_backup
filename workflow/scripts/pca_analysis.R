@@ -56,7 +56,6 @@
 # Imports #
 ###########
 
-library(DESeq2)
 library(ggplot2)
 
 
@@ -97,22 +96,7 @@ ntop <- 500L
 # Extract parameterized variables
 dds <- snakemake@input[["dds_rds"]]
 vst_mat <- snakemake@input[["assay"]]
-correction <- snakemake@wildcards[["correction"]]
-color_var <- snakemake@params[["color"]]
-color_label <- unname(color_var[[1]])
-color_var <- names(color_var)[1]
-shape_var <- snakemake@params[["shape"]]
-shape_label <- unname(shape_var[[1]])
-shape_var <- names(shape_var)[1]
-label_var <- snakemake@params[["label"]]
-palette <- snakemake@params[["palette"]]
-title_suffix <- snakemake@params[["title_suffix"]]
-scores_file <- snakemake@output[["scores"]]
-plot_file <- snakemake@output[["pca"]]
-pca_x <- snakemake@params[["pca_x"]]
-pca_y <- snakemake@params[["pca_y"]]
-cat("Correction stage:", correction, "\n")
-cat("Plotting with: color =", color_var, ", shape =", shape_var, "\n\n")
+
 
 
 #########
@@ -145,9 +129,8 @@ top_genes <- order(gene_var, decreasing = TRUE)[
 
 pca <- prcomp(t(vst_mat[top_genes, ]))
 
-
-######################
-# Variance explained #
-######################
-
-percent_var <- round(100 * pca$sdev^2 / sum(pca$sdev^2))
+##########
+# Output #
+##########
+saveRDS(pca, scores_file)
+cat("Saved:", scores_file, "\n")

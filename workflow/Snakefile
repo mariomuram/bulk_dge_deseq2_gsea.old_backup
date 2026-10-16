@@ -718,8 +718,21 @@ rule pca_analysis:
     plot_theme_lib = workflow.source_path("scripts/lib/plot_theme.R"),
     # ^-- explicitly re-run upon code change
   output:
-    pca = f"{OUTPUT_DIR}/qc/pca_{{correction}}.pdf",
     scores = f"{OUTPUT_DIR}/qc/pca_{{correction}}_scores.rds",
+
+  log: f"{OUTPUT_DIR}/logs/pca_analysis_{{correction}}.log"
+  conda: "envs/pca_analysis.yaml"
+  script: "scripts/pca_analysis.R"
+
+rule pca_plot:
+  input:
+    scores = rules.pca_analysis.output.scores,
+    plot_theme_lib = rules.pca_analysis.input.plot_theme_lib,
+    # ^-- explicitly re-run upon code change
+
+  output:
+    pca = f"{OUTPUT_DIR}/qc/pca_{{correction}}.pdf"
+
   params:
     pca_x =config["pca"].get("x", 1),
     pca_y =config["pca"].get("y", 2),
@@ -730,11 +743,10 @@ rule pca_analysis:
     title_suffix = lambda wc: (
       "" if wc.correction == "uncorrected" else f" ({wc.correction}-corrected)"
     ),
-  log: f"{OUTPUT_DIR}/logs/pca_analysis_{{correction}}.log"
-  conda: "envs/pca_analysis.yaml"
-  script: "scripts/pca_analysis.R"
 
-
+  log: f"{OUTPUT_DIR}/logs/pca_plot.log"
+  conda: "envs/pca_plot.yaml"
+  script: "scripts/pca_plot.R"
 
 rule pc_field_association:
   input:

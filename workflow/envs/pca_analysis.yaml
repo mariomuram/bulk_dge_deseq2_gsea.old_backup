@@ -45,6 +45,5 @@ channels:
 
 dependencies:
   - r-base
-  - bioconductor-deseq2
   - r-ggplot2
   - r-ggrepel

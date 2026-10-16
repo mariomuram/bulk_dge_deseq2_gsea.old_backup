@@ -520,7 +520,7 @@ if len(ACTIVE_CONFOUNDER_HANDLING_METHODS) > 1:
 
 
 ########################
-# Wildcard constraints ##
+# Wildcard constraints #
 ########################
 
 wildcard_constraints:

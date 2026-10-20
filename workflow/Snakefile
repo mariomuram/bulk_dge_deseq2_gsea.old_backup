@@ -715,8 +715,7 @@ rule pca_analysis:
   input:
     dds_rds = QC_DDS,
     assay = _assay_for_pca,
-    plot_theme_lib = workflow.source_path("scripts/lib/plot_theme.R"),
-    # ^-- explicitly re-run upon code change
+
   output:
     scores = f"{OUTPUT_DIR}/qc/pca_analysis_{{correction}}_scores.rds",
 
@@ -728,7 +727,7 @@ rule pca_plot:
   input:
     dds_rds = QC_DDS,
     scores = rules.pca_analysis.output.scores,
-    plot_theme_lib = rules.pca_analysis.input.plot_theme_lib,
+    plot_theme_lib = workflow.source_path("scripts/lib/plot_theme.R"),
     # ^-- explicitly re-run upon code change
 
   output:

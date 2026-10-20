@@ -20,6 +20,14 @@ sink(logfile, type = "message", append = TRUE)
 cat("=== QC: PCA Plot ===\n")
 cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 
+
+###############
+# Shared code #
+###############
+
+source(snakemake@input[["plot_theme_lib"]])
+
+
 ##############
 # Parameters #
 ##############

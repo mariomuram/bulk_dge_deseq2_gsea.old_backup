@@ -96,6 +96,7 @@ ntop <- 500L
 # Extract parameterized variables
 dds <- snakemake@input[["dds_rds"]]
 vst_mat <- snakemake@input[["assay"]]
+scores_file <- snakemake@output[["scores"]]
 
 
 

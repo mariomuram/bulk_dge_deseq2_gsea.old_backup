@@ -726,6 +726,7 @@ rule pca_analysis:
 
 rule pca_plot:
   input:
+    dds_rds = QC_DDS,
     scores = rules.pca_analysis.output.scores,
     plot_theme_lib = rules.pca_analysis.input.plot_theme_lib,
     # ^-- explicitly re-run upon code change

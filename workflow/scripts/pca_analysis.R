@@ -55,7 +55,7 @@
 # Imports #
 ###########
 
-library(Deseq2)
+library(DESeq2)
 
 ###########
 # Logging #

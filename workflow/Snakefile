@@ -547,7 +547,7 @@ rule all:
            contrast=CONTRAST_NAMES,
            confounder_handling=ACTIVE_CONFOUNDER_HANDLING_METHODS),
     # QC plots
-    expand(f"{OUTPUT_DIR}/qc/pca_{{correction}}.pdf",
+    expand(f"{OUTPUT_DIR}/qc/pca_plot_{{correction}}.pdf",
            correction=ACTIVE_CORRECTION_METHODS_QC),
     expand(f"{OUTPUT_DIR}/qc/pc_field_association_{{correction}}_heatmap.pdf",
            correction=ACTIVE_CORRECTION_METHODS_QC),
@@ -718,7 +718,7 @@ rule pca_analysis:
     plot_theme_lib = workflow.source_path("scripts/lib/plot_theme.R"),
     # ^-- explicitly re-run upon code change
   output:
-    scores = f"{OUTPUT_DIR}/qc/pca_{{correction}}_scores.rds",
+    scores = f"{OUTPUT_DIR}/qc/pca_analysis_{{correction}}_scores.rds",
 
   log: f"{OUTPUT_DIR}/logs/pca_analysis_{{correction}}.log"
   conda: "envs/pca_analysis.yaml"
@@ -731,7 +731,7 @@ rule pca_plot:
     # ^-- explicitly re-run upon code change
 
   output:
-    pca = f"{OUTPUT_DIR}/qc/pca_{{correction}}.pdf"
+    pca = f"{OUTPUT_DIR}/qc/pca_plot_{{correction}}.pdf"
 
   params:
     pca_x =config["pca"].get("x", 1),

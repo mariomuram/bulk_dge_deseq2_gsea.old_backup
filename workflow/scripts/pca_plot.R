@@ -17,6 +17,7 @@ cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 # Parameters #
 ##############
 
+scores_file <- snakemake@input[["scores"]]
 correction <- snakemake@wildcards[["correction"]]
 color_var <- snakemake@params[["color"]]
 color_label <- unname(color_var[[1]])
@@ -33,6 +34,11 @@ pca_y <- snakemake@params[["pca_y"]]
 cat("Correction stage:", correction, "\n")
 cat("Plotting with: color =", color_var, ", shape =", shape_var, "\n\n")
 
+######################
+#        Input       #
+######################
+
+pca <- readRDS(scores_file)
 
 ######################
 # Variance explained #

@@ -1,6 +1,12 @@
 #!/usr/bin/env Rscript
 
 ###########
+# Imports #
+###########
+
+library(Deseq2)
+
+###########
 # Logging #
 ###########
 
@@ -17,6 +23,7 @@ cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 # Parameters #
 ##############
 
+dds <- snakemake@input[["dds_rds"]]
 scores_file <- snakemake@input[["scores"]]
 correction <- snakemake@wildcards[["correction"]]
 color_var <- snakemake@params[["color"]]
@@ -34,11 +41,14 @@ pca_y <- snakemake@params[["pca_y"]]
 cat("Correction stage:", correction, "\n")
 cat("Plotting with: color =", color_var, ", shape =", shape_var, "\n\n")
 
+
 ######################
 #        Input       #
 ######################
 
 pca <- readRDS(scores_file)
+dds <- readRDS(dds)
+cat("Loaded dds:", ncol(dds), "samples,", nrow(dds), "genes\n")
 
 ######################
 # Variance explained #

@@ -51,13 +51,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 ###########
 # Imports #
 ###########
 
-library(ggplot2)
-
+library(Deseq2)
 
 ###########
 # Logging #
@@ -71,7 +69,6 @@ sink(logfile, type = "message", append = TRUE)
 
 cat("=== QC: PCA Analysis ===\n")
 cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
-
 
 ###############
 # Shared code #

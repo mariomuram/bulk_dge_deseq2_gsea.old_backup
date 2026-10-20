@@ -69,7 +69,7 @@ logfile <- file(logfile, open = "w")
 sink(logfile, type = "output")
 sink(logfile, type = "message", append = TRUE)
 
-cat("=== QC: PCA Plot ===\n")
+cat("=== QC: PCA Analysis ===\n")
 cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 
@@ -135,3 +135,12 @@ pca <- prcomp(t(vst_mat[top_genes, ]))
 ##########
 saveRDS(pca, scores_file)
 cat("Saved:", scores_file, "\n")
+
+###########
+# Cleanup #
+###########
+
+cat("\n=== QC: PCA Analysis Complete ===\n")
+sink(type = "message")
+sink()
+close(logfile)

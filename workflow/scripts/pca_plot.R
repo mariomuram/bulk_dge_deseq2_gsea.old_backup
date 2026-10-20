@@ -1,5 +1,18 @@
 #!/usr/bin/env Rscript
 
+###########
+# Logging #
+###########
+
+logfile <- snakemake@log[[1]]
+dir.create(dirname(logfile), showWarnings = FALSE, recursive = TRUE)
+logfile <- file(logfile, open = "w")
+sink(logfile, type = "output")
+sink(logfile, type = "message", append = TRUE)
+
+cat("=== QC: PCA Plot ===\n")
+cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
+
 ##############
 # Parameters #
 ##############

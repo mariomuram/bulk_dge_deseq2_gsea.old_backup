@@ -744,7 +744,7 @@ rule pca_plot:
       "" if wc.correction == "uncorrected" else f" ({wc.correction}-corrected)"
     ),
 
-  log: f"{OUTPUT_DIR}/logs/pca_{{correction}}.log"
+  log: f"{OUTPUT_DIR}/logs/pca_plot_{{correction}}.log"
   conda: "envs/pca_plot.yaml"
   script: "scripts/pca_plot.R"
 

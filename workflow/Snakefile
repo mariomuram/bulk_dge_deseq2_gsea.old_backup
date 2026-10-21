@@ -554,7 +554,7 @@ rule all:
                        for _ in (pairs or ["PC1_PC2"])],
            PCs=[pc for c, pairs in config["pca"]["combinations"].items()
                 if c in ACTIVE_CORRECTION_METHODS_QC
-                for pc in (pairs or ["PC1_PC2"])],
+                for pc in (pairs or ["PC1_PC2"])]),
     expand(f"{OUTPUT_DIR}/qc/pc_field_association_{{correction}}_heatmap.pdf",
            correction=ACTIVE_CORRECTION_METHODS_QC),
     f"{OUTPUT_DIR}/qc/field_collinearity_heatmap.pdf",

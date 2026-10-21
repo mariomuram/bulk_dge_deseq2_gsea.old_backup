@@ -84,6 +84,9 @@ source(snakemake@input[["plot_theme_lib"]])
 # Parameters #
 ##############
 
+pcs <- strsplit(snakemake@wildcards[["PCs"]], "_")[[1]]
+pca_x <- as.integer(sub("^PC", "", pcs[1]))
+pca_y <- as.integer(sub("^PC", "", pcs[2]))
 dds <- snakemake@input[["dds_rds"]]
 scores_file <- snakemake@input[["scores"]]
 correction <- snakemake@wildcards[["correction"]]
@@ -97,8 +100,6 @@ label_var <- snakemake@params[["label"]]
 palette <- snakemake@params[["palette"]]
 title_suffix <- snakemake@params[["title_suffix"]]
 plot_file <- snakemake@output[["pca"]]
-pca_x <- snakemake@params[["pca_x"]]
-pca_y <- snakemake@params[["pca_y"]]
 cat("Correction stage:", correction, "\n")
 cat("Plotting with: color =", color_var, ", shape =", shape_var, "\n\n")
 

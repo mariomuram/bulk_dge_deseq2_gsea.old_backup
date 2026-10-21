@@ -8,12 +8,12 @@
 # About #
 #########
 
-# File:     workflow/scripts/plot_pca.R
+# File:     workflow/scripts/pca_analysis.R
 # Author:   Marcel Schilling <mschilling@idibell.cat>
 # Created:  2026-10-01
-# Modified: 2026-10-15
+# Modified: 2026-10-21
 # License:  GNU Affero General Public License version 3 or later
-# Purpose:  PCA plot R script for the bulk RNA-seq DGE (DESeq2 + GSEA)
+# Purpose:  PCA analysis R script for the bulk RNA-seq DGE (DESeq2 + GSEA)
 #           Snakemake workflow.
 
 
@@ -21,7 +21,7 @@
 # Description #
 ###############
 
-# QC: PCA plot across all samples (not contrast-specific), for one
+# QC: PCA across all samples (not contrast-specific), for one
 # correction stage (`"uncorrected"` = blind VST; otherwise the
 # batch-corrected VST). The `prcomp()` object is stashed so
 # `pc_field_association` doesn't recompute it.
@@ -31,7 +31,7 @@
 # License #
 ###########
 
-# PCA plot R script for bulk RNA-seq DGE (DESeq2 + GSEA) Snakemake
+# PCA R script for bulk RNA-seq DGE (DESeq2 + GSEA) Snakemake
 # workflow.
 # Copyright (C) 2026  Marcel Schilling
 #
@@ -57,6 +57,7 @@
 
 library(DESeq2)
 
+
 ###########
 # Logging #
 ###########
@@ -69,6 +70,7 @@ sink(logfile, type = "message", append = TRUE)
 
 cat("=== QC: PCA Analysis ===\n")
 cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
+
 
 #############
 # Constants #
@@ -87,7 +89,6 @@ ntop <- 500L
 dds <- snakemake@input[["dds_rds"]]
 vst_mat <- snakemake@input[["assay"]]
 scores_file <- snakemake@output[["scores"]]
-
 
 
 #########
@@ -120,11 +121,14 @@ top_genes <- order(gene_var, decreasing = TRUE)[
 
 pca <- prcomp(t(vst_mat[top_genes, ]))
 
+
 ##########
 # Output #
 ##########
+
 saveRDS(pca, scores_file)
 cat("Saved:", scores_file, "\n")
+
 
 ###########
 # Cleanup #

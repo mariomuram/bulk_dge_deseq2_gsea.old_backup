@@ -73,6 +73,14 @@ cat("=== QC: PCA Plot ===\n")
 cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 
+#############
+# Constants #
+#############
+
+# Default prefix for principal component columns in PCA scores data frame.
+pc_prefix <- "PC"
+
+
 ###############
 # Shared code #
 ###############
@@ -134,7 +142,7 @@ fields <- unique(c(color_var, shape_var, label_var))
 pca_data <- cbind(
   setNames(
     as.data.frame(pca$x[, c(pca_x, pca_y), drop=FALSE]),
-    paste0("PC", c(pca_x, pca_y))
+    paste0(pc_prefix, c(pca_x, pca_y))
   ),
   as.data.frame(colData(dds))[
     rownames(pca$x), fields, drop = FALSE])
@@ -147,8 +155,8 @@ pca_plot <- ggplot(pca_data,
   scale_color_brewer(palette = palette) +
   labs(
     title = paste0("PCA", title_suffix),
-    x = paste0("PC", pca_x, ": ", percent_var[pca_x], "% variance"),
-    y = paste0("PC", pca_y, ": ", percent_var[pca_y], "% variance"),
+    x = paste0(pc_prefix, pca_x, ": ", percent_var[pca_x], "% variance"),
+    y = paste0(pc_prefix, pca_y, ": ", percent_var[pca_y], "% variance"),
     color = color_label, shape = shape_label
   )
 if (!is.null(label_var)) {

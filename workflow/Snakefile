@@ -530,7 +530,7 @@ wildcard_constraints:
   confounder_handling = "|".join(ACTIVE_CONFOUNDER_HANDLING_METHODS),
   lfc_type = "unshrunk|shrunk",
   gsea = "|".join(re.escape(a) for a in GSEA_NAMES),
-
+  PCs = r"PC[1-9][0-9]*_PC[1-9][0-9]*"
 
 #########
 # Rules #

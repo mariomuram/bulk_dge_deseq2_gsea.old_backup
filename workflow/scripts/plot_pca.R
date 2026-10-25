@@ -128,6 +128,22 @@ cat("Loaded dds:", ncol(dds), "samples,", nrow(dds), "genes\n")
 percent_var <- round(100 * pca$sdev^2 / sum(pca$sdev^2))
 
 
+################
+# Checking PCs #
+################
+
+#Checking that the PCs requested are different
+if (pca_x == pca_y) {
+  stop("The requested PCA components must be different.")
+}
+
+#Checking that PCs requested are within the range of PCs calculated.
+if (pca_x > ncol(pca$x) || pca_y > ncol(pca$x)) {
+  stop("Requested PCs (", pca_x, ", ", pca_y, ") exceed number of computed PCs (",
+       ncol(pca$x), ").")
+} 
+
+
 ####################
 # PCA scatter plot #
 ####################
